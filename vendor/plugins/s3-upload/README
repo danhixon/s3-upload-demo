@@ -1,0 +1,53 @@
+S3SwfUpload
+===========
+
+S3SwfUpload allow user uploading a file to S3 directly, so you can save the cost of uploading process in your app server.
+
+Install
+=======
+
+Install goes here.
+
+Usage
+=======
+
+1. $ script/generate s3_swf_upload
+
+2. configure amazon_s3.yml
+
+3. Upload a crossdomain.xml in your bucket and make it public-read.
+
+4. include s3_upload.js in your layouts:
+
+  <%= javascript_include_tag 's3_upload' %>
+
+5. init s3_swf object:
+
+  <script type='text/javascript'>
+    s3_swf = s3_swf_init('s3_upload', {
+      width:  300,
+      height: 35,
+      onSuccess: function(){
+        alert('Transfer complete');
+	  },
+      onFailed: function(status){
+        alert('Transfer Failed');
+	  },
+	  onFileSelected: function(filename, size){
+        alert('File selected: ' + filename);
+	  },
+	  onCancel: function(){
+		alert('Transfer canceled');
+	  }
+    });
+  </script>
+  
+  <div id='s3_upload'>
+    Please <a href="http://www.adobe.com/go/getflashplayer">Update</a> your Flash Player to Flash v9.0.1 or higher...
+  </div>
+
+  <%= link_to_function 'Upload', 's3_swf.upload("prefix/")' %>
+
+6. when you click upload, your file will be upload to http://bucket.s3.amazonaws.com/prefix/
+
+Copyright (c) 2008 elctech, released under the MIT license

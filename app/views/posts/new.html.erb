@@ -1,0 +1,32 @@
+<h1>Upload File to s3</h1>
+<script type='text/javascript'>
+    s3_swf = s3_swf_init('s3_upload', {
+      width:  488,
+      height: 50,
+      onSuccess: function(){
+        //alert('Transfer complete');
+		window.status = "";
+	  },
+      onFailed: function(status){
+        alert('Transfer Failed');
+	  },
+	  onFileSelected: function(filename, size, contentType){
+        alert('File selected: ' + filename + ' Size: ' + size + ' bytes, ContentType: ' + contentType);
+	  },
+	  onCancel: function(){
+		alert('Transfer canceled');
+	  }
+    });
+  </script>
+  <div class="main">
+	<div id='s3_upload'>
+		Please <a href="http://www.adobe.com/go/getflashplayer">Update</a> your Flash Player to Flash v9.0.1 or higher...
+	</div>
+	<br />
+	Maximum file size: <%= S3SwfUpload::S3Config.max_file_size/1024.0/1024.0 %>MB
+	<br />
+	  <%= link_to_function 'Upload', 's3_swf.upload("originals/")' %>
+
+	<hr />
+ 	The file will be uploaded to the s3 but you won't have access to it.
+</div>
